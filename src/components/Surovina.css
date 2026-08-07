@@ -1,0 +1,23 @@
+button {
+    width: 40px;
+    height: 40px;
+    background-color: red;
+    border: 0;
+    color: black;
+    border-radius: 10px;
+    padding-top: 6px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.Surovina {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 80vw;
+    margin: 20px auto;
+}
+.buttonBox {
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+}

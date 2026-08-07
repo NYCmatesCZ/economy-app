@@ -8,9 +8,17 @@ ul {
 }
 a, li {
     text-decoration: none;
+    color: bisque;
 }
 nav {
     display: flex;
     margin: 10px auto;
     max-width: 700px;
+}
+li:hover {
+    transition: all 0.5s linear;
+    transform: scale(110%);
+}
+.active {
+    color: red;
 }
