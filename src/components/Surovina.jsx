@@ -9,7 +9,7 @@ const Surovina = ( {jednaSurovina, ulozeniProfilu }) => {
         ulozeniProfilu(nazev,pocet)
     },[pocet])
     const upravitPocet = (number) =>{
-        const newPocet = pocet+number;
+        let newPocet = pocet+number;
         if (newPocet < 0) newPocet = 0 
         if (newPocet > 999) newPocet = 999
         setPocet(newPocet)
@@ -19,7 +19,7 @@ const Surovina = ( {jednaSurovina, ulozeniProfilu }) => {
         <p>{pocet}</p>
         <div className="buttonBox">
             <button onClick={() => upravitPocet(1)}><FaPlusCircle/></button>
-            <button onClick={() =>upravitPocet(-1)}><FaMinusCircle/></button>
+            <button onClick={() => upravitPocet(-1)}><FaMinusCircle/></button>
         </div>
     </div>
 }
