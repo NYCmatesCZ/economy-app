@@ -1,0 +1,11 @@
+.tabulka {
+    display: flex;
+    width: 80vw;
+    justify-content: center;
+    margin: 10px auto;
+    flex-direction: row;
+}
+td, th {
+    width: 500px;
+    text-align: center;
+}
