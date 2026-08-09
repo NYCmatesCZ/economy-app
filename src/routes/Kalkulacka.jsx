@@ -12,10 +12,12 @@ const Kalkulacka = () =>{
         newProfil.money -= surovina['nakup'] * pocet
         newProfil['suroviny'].push({
             nazev: surovina['nazev'],
-            pocet: pocet
+            pocet: Number(pocet)
         })
-        
+        console.log(newProfil);
         setProfil(newProfil)
+        console.log(Profil);
+        
     }
     const prodej = (event,surovina,pocet) =>{
         event.preventDefault()
