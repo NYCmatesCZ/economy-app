@@ -4,23 +4,19 @@ import { useState } from "react"
 import "./Kalkulacka.css"
 import profilData from "../data.jsx"
 const Kalkulacka = () =>{
+    const [celkem, setCelkem] = useState(0)
     const [suroviny, setsuroviny] = useState(data)
     const [profil, setProfil] = useState(profilData)
-    const nakup = (event,surovina,pocet) =>{
-        event.preventDefault()
-        let newProfil = {...profil};
-        newProfil.money -= surovina['nakup'] * pocet
-        newProfil['suroviny'].push({
-            nazev: surovina['nazev'],
-            pocet: Number(pocet)
-        })
-        console.log(newProfil);
-        setProfil(newProfil)
-        console.log(Profil);
-        
+    const zmenaPoctuSuroviny = (surovinaNazev,pocet) =>{
+        suroviny.find(({nazev}) => nazev == surovinaNazev).pocet = Number(pocet);
     }
-    const prodej = (event,surovina,pocet) =>{
+    const nakoupit = (event) =>{
         event.preventDefault()
+        let suma = 0
+        suroviny.forEach(({nakup, pocet}) =>{
+            suma+=(nakup*pocet)
+        })
+        setCelkem(suma)
     }
     return <div>
         <h1>Tohle je Kalkulacka</h1>
@@ -33,8 +29,7 @@ const Kalkulacka = () =>{
                         <th>Nákupní cena</th>
                         <th>Prodejní cena</th>
                         <th>Počet</th>
-                        <th>Nakoupit</th>
-                        <th>Prodat</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -42,16 +37,18 @@ const Kalkulacka = () =>{
                         return <SurovinaNakup
                         key={index}
                         surovina={surovina}
-                        nakup={nakup}
-                        prodej={prodej}/>
-                        }
+                        zmenaPoctuSuroviny={zmenaPoctuSuroviny}
+                        />}
                     )}
                     
                 </tbody>
             </table>
             </div>
-            <h5>Vaše peníze: {profil.money}</h5>
-            <h5>Celková Suma: {0}</h5>
+            <p>Vaše peníze: {profil.money}</p>
+            <button onClick={(event)=> {nakoupit(event)}}>Nakoupit</button>
+            <button onClick={(event)=> {nakoupit(event)}}>Prodat</button>
+            <label htmlFor="celkem">Celková suma: </label><input id="celkem" readOnly value={celkem}></input>
+            <input type="submit" value={"Potvrdit obchod"} />
         </form>
         
     </div>
