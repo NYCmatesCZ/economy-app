@@ -18,6 +18,24 @@ const Kalkulacka = () =>{
         })
         setCelkem(suma)
     }
+    const prodej = (event) =>{
+        event.preventDefault()
+        let suma = 0
+        suroviny.forEach(({prodej, pocet}) =>{
+            suma+=(prodej*pocet)
+        })
+        setCelkem(suma)
+    }
+    const formSubmit = (event) => {
+        event.preventDefault()
+        let newProfil = {...profil}
+        newProfil['money'] -=celkem
+        for (let index = 0; index < suroviny.length; index++) {
+            newProfil['suroviny'][index].pocet += suroviny[index].pocet
+        }
+        setProfil(newProfil)
+        setCelkem(0)
+    }
     return <div>
         <h1>Tohle je Kalkulacka</h1>
         <form >
@@ -46,9 +64,9 @@ const Kalkulacka = () =>{
             </div>
             <p>Vaše peníze: {profil.money}</p>
             <button onClick={(event)=> {nakoupit(event)}}>Nakoupit</button>
-            <button onClick={(event)=> {nakoupit(event)}}>Prodat</button>
+            <button onClick={(event)=> {prodej(event)}}>Prodat</button>
             <label htmlFor="celkem">Celková suma: </label><input id="celkem" readOnly value={celkem}></input>
-            <input type="submit" value={"Potvrdit obchod"} />
+            <input type="submit" value={"Potvrdit obchod"} onClick={(event) => formSubmit(event)}/>
         </form>
         
     </div>

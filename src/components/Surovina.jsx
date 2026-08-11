@@ -2,7 +2,6 @@ import { useState,useEffect } from "react";
 import "./Surovina.css";
 import { FaPlusCircle,FaMinusCircle } from "react-icons/fa";
 const Surovina = ( {jednaSurovina, ulozeniProfilu }) => {
-    {console.log(jednaSurovina);}
     const [nazev, setNazev] = useState(jednaSurovina.nazev)
     const [pocet, setPocet] = useState(jednaSurovina.pocet)
     useEffect(() => {
