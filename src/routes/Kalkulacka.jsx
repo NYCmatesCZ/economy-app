@@ -1,9 +1,14 @@
 import SurovinaNakup from "../components/SurovinaNakup"
 import data from "../vsechnySuroviny"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import "./Kalkulacka.css"
 import profilData from "../data.jsx"
 const Kalkulacka = () =>{
+    useEffect(()=>{
+        setsuroviny(data)
+        console.log(data);
+        
+    })
     const [celkem, setCelkem] = useState(0)
     const [suroviny, setsuroviny] = useState(data)
     const [profil, setProfil] = useState(profilData)
@@ -35,6 +40,7 @@ const Kalkulacka = () =>{
         }
         setProfil(newProfil)
         setCelkem(0)
+        localStorage.setItem("profil",JSON.stringify(profil))
     }
     return <div>
         <h1>Tohle je Kalkulacka</h1>
