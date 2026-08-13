@@ -1,19 +1,25 @@
 import SurovinaNakup from "../components/SurovinaNakup"
 import data from "../vsechnySuroviny"
-import { useState,useEffect } from "react"
+import { useState,useEffect,useRef } from "react"
 import "./Kalkulacka.css"
 import profilData from "../data.jsx"
 const Kalkulacka = () =>{
+    const [prepinac, setPrepinac ] = useState(true)
     useEffect(()=>{
-        setsuroviny(data)
-        console.log(data);
-        
+        if(prepinac){
+            nakoupit(event)
+            
+        }else{
+            prodej(event)
+        }
     })
     const [celkem, setCelkem] = useState(0)
-    const [suroviny, setsuroviny] = useState(data)
+    const [suroviny, setSuroviny] = useState(data)
     const [profil, setProfil] = useState(profilData)
     const zmenaPoctuSuroviny = (surovinaNazev,pocet) =>{
-        suroviny.find(({nazev}) => nazev == surovinaNazev).pocet = Number(pocet);
+        setSuroviny(suroviny.map((polozka, index) => {
+            return polozka.nazev == surovinaNazev ? {...polozka, pocet: pocet} : polozka
+        }))
     }
     const nakoupit = (event) =>{
         event.preventDefault()
@@ -69,8 +75,10 @@ const Kalkulacka = () =>{
             </table>
             </div>
             <p>Vaše peníze: {profil.money}</p>
-            <button onClick={(event)=> {nakoupit(event)}}>Nakoupit</button>
-            <button onClick={(event)=> {prodej(event)}}>Prodat</button>
+            <input type="radio" name="prepinac" id="nakup" checked={prepinac} onChange={() =>setPrepinac(!prepinac)} />
+            <input type="radio" name="prepinac" id="prodej" checked={!prepinac} onChange={() =>setPrepinac(!prepinac)}/>
+            <label htmlFor="nakup">Nakoupit</label>
+            <label htmlFor="prodej">Prodat</label>
             <label htmlFor="celkem">Celková suma: </label><input id="celkem" readOnly value={celkem}></input>
             <input type="submit" value={"Potvrdit obchod"} onClick={(event) => formSubmit(event)}/>
         </form>
