@@ -8,7 +8,6 @@ const Kalkulacka = () =>{
     useEffect(()=>{
         if(prepinac){
             nakoupit(event)
-            
         }else{
             prodej(event)
         }
@@ -18,7 +17,7 @@ const Kalkulacka = () =>{
     const [profil, setProfil] = useState(profilData)
     const zmenaPoctuSuroviny = (surovinaNazev,pocet) =>{
         setSuroviny(suroviny.map((polozka, index) => {
-            return polozka.nazev == surovinaNazev ? {...polozka, pocet: pocet} : polozka
+            return polozka.nazev == surovinaNazev ? {...polozka, pocet: Number(pocet)} : polozka
         }))
     }
     const nakoupit = (event) =>{
@@ -39,15 +38,21 @@ const Kalkulacka = () =>{
     }
     const formSubmit = (event) => {
         event.preventDefault()
-        let newProfil = {...profil}
-        newProfil['money'] -=celkem
-        for (let index = 0; index < suroviny.length; index++) {
-            newProfil['suroviny'][index].pocet += suroviny[index].pocet
-        }
-        setProfil(newProfil)
+        setProfil((prevProfil => {
+            return {...prevProfil,
+                money: prevProfil.money - celkem,
+                suroviny: prevProfil.suroviny.map((jednaSurovina,index) => {
+                    return {...jednaSurovina, 
+                        pocet: jednaSurovina.pocet + Number(suroviny[index].pocet)}
+                })
+            }
+        }))
         setCelkem(0)
-        localStorage.setItem("profil",JSON.stringify(profil))
     }
+    useEffect(()=>{
+        localStorage.setItem("profil",JSON.stringify(profil))
+        console.log(profil);
+    },[profil])
     return <div>
         <h1>Tohle je Kalkulacka</h1>
         <form >
