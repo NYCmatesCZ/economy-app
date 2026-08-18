@@ -3,12 +3,13 @@ import "./Profil.css";
 import data from "../data"
 import { useState } from "react";
 const Profil = () =>{
-   
+    useEffect(()=>{
+            localStorage.setItem("profil",JSON.stringify(profil))
+    },[profil])
     const [Profil, setProfil] = useState(data)
     const ulozeniProfilu = (nazevSuroviny, pocetSurovin) =>{
         Profil['suroviny']['nazev'] = nazevSuroviny;
         Profil['suroviny']['pocet'] = pocetSurovin;
-        localStorage.setItem("profil",JSON.stringify(Profil))
     }
     return <div>
         <h1>Tohle je profil</h1>
