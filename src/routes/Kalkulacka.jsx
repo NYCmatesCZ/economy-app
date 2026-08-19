@@ -51,11 +51,16 @@ const Kalkulacka = () =>{
             }
         }))
         }else{
+            const osetreneSuroviny = suroviny.map((surovina,index) => {
+                return surovina.pocet>profil.suroviny[index].pocet ? 
+                {...surovina, pocet: profil.suroviny[index].pocet} : 
+                {...surovina}
+            })
             setProfil((prev)=>{
                 return {...prev,
-                    money: suroviny.reduce((sum, surovina)=> sum + surovina.pocet * surovina.prodej , prev.money),
+                    money: osetreneSuroviny.reduce((sum, surovina)=> sum + surovina.pocet * surovina.prodej , prev.money),
                     suroviny: prev.suroviny.map((surovina,index)=>{
-                        return {...surovina, pocet: surovina.pocet - suroviny[index].pocet}
+                        return {...surovina, pocet: surovina.pocet - osetreneSuroviny[index].pocet}
                     })
                 }
             })
