@@ -40,6 +40,7 @@ const Kalkulacka = () =>{
     }
     const formSubmit = (event) => {
         event.preventDefault()
+        if(prepinac){
         setProfil((prevProfil => {
             return {...prevProfil,
                 money: prevProfil.money - celkem,
@@ -49,6 +50,16 @@ const Kalkulacka = () =>{
                 })
             }
         }))
+        }else{
+            setProfil((prev)=>{
+                return {...prev,
+                    money: suroviny.reduce((sum, surovina)=> sum + surovina.pocet * surovina.prodej , prev.money),
+                    suroviny: prev.suroviny.map((surovina,index)=>{
+                        return {...surovina, pocet: surovina.pocet - suroviny[index].pocet}
+                    })
+                }
+            })
+        }
         setCelkem(0)
     }
     useEffect(()=>{
