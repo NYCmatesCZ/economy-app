@@ -2,7 +2,7 @@ import SurovinaNakup from "../components/SurovinaNakup"
 import data from "../vsechnySuroviny"
 import { useState,useEffect,useRef } from "react"
 import "./Kalkulacka.css"
-import profilData from "../data.jsx"
+import defaultProfil from "../defaultProfil.jsx"
 const Kalkulacka = () =>{
     const [prepinac, setPrepinac ] = useState(true)
     useEffect(()=>{
@@ -14,7 +14,9 @@ const Kalkulacka = () =>{
     })
     const [celkem, setCelkem] = useState(0)
     const [suroviny, setSuroviny] = useState(data)
-    const [profil, setProfil] = useState(profilData)
+    const [profil, setProfil] = useState(()=>{
+        return localStorage.getItem('profil') ? JSON.parse(localStorage.getItem('profil')) : defaultProfil
+    })
     const zmenaPoctuSuroviny = (surovinaNazev,pocet) =>{
         setSuroviny(suroviny.map((polozka, index) => {
             return polozka.nazev == surovinaNazev ? {...polozka, pocet: Number(pocet)} : polozka
@@ -51,7 +53,6 @@ const Kalkulacka = () =>{
     }
     useEffect(()=>{
         localStorage.setItem("profil",JSON.stringify(profil))
-        console.log(profil);
     },[profil])
     return <div>
         <h1>Tohle je Kalkulacka</h1>
